@@ -33,6 +33,8 @@ namespace Com.DanLiris.Service.Purchasing.Lib.Enums
         public const string UNIT_CENTRAL2A = "03";
         public const string UNIT_CENTRAL2B = "04";
         public const string UNIT_CENTRAL2C = "05";
+        public const string UNIT_PRODUKSI = "05";
+
 
         public const string PEMBELIAN_BAHAN_BAKU = "5901";
         public const string PEMBELIAN_BARANG_JADI = "5902";
@@ -146,6 +148,9 @@ namespace Com.DanLiris.Service.Purchasing.Lib.Enums
                             break;
                         case "C2C":
                             result += "." + UNIT_CENTRAL2C;
+                            break;
+                        case "EF4":
+                            result += "." + UNIT_PRODUKSI;
                             break;
                         default:
                             result += ".00";
