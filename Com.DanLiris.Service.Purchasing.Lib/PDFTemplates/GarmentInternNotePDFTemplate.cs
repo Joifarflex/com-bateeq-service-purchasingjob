@@ -146,7 +146,7 @@ namespace Com.DanLiris.Service.Purchasing.Lib.PDFTemplates
             units.Add("C2A", 0);
             units.Add("C2B", 0);
             units.Add("C2C", 0);
-            units.Add("EF4", 0);
+            units.Add("E05", 0);
             Dictionary<long, decimal> koreksi = new Dictionary<long, decimal>();
             Dictionary<long, double> kurs = new Dictionary<long, double>();
 
