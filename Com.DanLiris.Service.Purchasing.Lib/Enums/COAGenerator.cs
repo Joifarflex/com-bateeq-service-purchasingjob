@@ -149,7 +149,7 @@ namespace Com.DanLiris.Service.Purchasing.Lib.Enums
                         case "C2C":
                             result += "." + UNIT_CENTRAL2C;
                             break;
-                        case "EF4":
+                        case "E05":
                             result += "." + UNIT_PRODUKSI;
                             break;
                         default:
