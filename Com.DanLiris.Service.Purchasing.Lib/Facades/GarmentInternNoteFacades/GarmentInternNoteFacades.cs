@@ -314,9 +314,9 @@ namespace Com.DanLiris.Service.Purchasing.Lib.Facades.GarmentInternNoteFacades
             }
         }
         #region Monitoring
-        public Tuple<List<GarmentInternNoteReportViewModel>, int> GetReport(string no, string supplierCode, string curencyCode, string invoiceNo, string doNo, string billNo, string paymentBill, DateTime? dateFrom, DateTime? dateTo, int page, int size, string Order, int offset)
+        public Tuple<List<GarmentInternNoteReportViewModel>, int> GetReport(string no, string supplierCode, string curencyCode, string invoiceNo, string doNo, /**string billNo, string paymentBill,**/ DateTime? dateFrom, DateTime? dateTo, int page, int size, string Order, int offset)
         {
-            var Query = GetReportInternNote(no, supplierCode, curencyCode, invoiceNo, doNo, billNo, paymentBill, dateFrom, dateTo, offset, page, size);
+            var Query = GetReportInternNote(no, supplierCode, curencyCode, invoiceNo, doNo, /**billNo, paymentBill,**/ dateFrom, dateTo, offset, page, size);
             //Console.WriteLine(Query);
             Dictionary<string, string> OrderDictionary = JsonConvert.DeserializeObject<Dictionary<string, string>>(Order);
             if (OrderDictionary.Count.Equals(0))
@@ -331,7 +331,7 @@ namespace Com.DanLiris.Service.Purchasing.Lib.Facades.GarmentInternNoteFacades
             return Tuple.Create(Query, TotalCountReport);
         }
         public int TotalCountReport { get; set; } = 0;
-        public List<GarmentInternNoteReportViewModel> GetReportInternNote(string no, string supplierCode, string curencyCode, string invoiceNo, string doNo, string billNo, string paymentBill, DateTime? dateFrom, DateTime? dateTo, int offset, int page, int size)
+        public List<GarmentInternNoteReportViewModel> GetReportInternNote(string no, string supplierCode, string curencyCode, string invoiceNo, string doNo, /**string billNo, string paymentBill,**/ DateTime? dateFrom, DateTime? dateTo, int offset, int page, int size)
         {
             DateTime DateFrom = dateFrom == null ? new DateTime(1970, 1, 1) : (DateTime)dateFrom;
             DateTime DateTo = dateTo == null ? DateTime.Now : (DateTime)dateTo;
@@ -348,8 +348,8 @@ namespace Com.DanLiris.Service.Purchasing.Lib.Facades.GarmentInternNoteFacades
                          && a.INNo == (string.IsNullOrWhiteSpace(no) ? a.INNo : no)
                          && b.InvoiceNo == (string.IsNullOrWhiteSpace(invoiceNo) ? b.InvoiceNo : invoiceNo)
                          && c.DONo == (string.IsNullOrWhiteSpace(doNo) ? c.DONo : doNo)
-                         && d.BillNo == (string.IsNullOrWhiteSpace(billNo) ? d.BillNo : billNo)
-                         && d.PaymentBill == (string.IsNullOrWhiteSpace(paymentBill) ? d.PaymentBill : paymentBill)
+                         /**&& d.BillNo == (string.IsNullOrWhiteSpace(billNo) ? d.BillNo : billNo)
+                         && d.PaymentBill == (string.IsNullOrWhiteSpace(paymentBill) ? d.PaymentBill : paymentBill)**/
                          && a.SupplierCode == (string.IsNullOrWhiteSpace(supplierCode) ? a.SupplierCode : supplierCode)
                          && a.INDate.AddHours(offset).Date >= DateFrom.Date
                          && a.INDate.AddHours(offset).Date <= DateTo.Date
@@ -410,9 +410,9 @@ namespace Com.DanLiris.Service.Purchasing.Lib.Facades.GarmentInternNoteFacades
             return list;
         }
 
-        public MemoryStream GenerateExcelIn(string no, string supplierCode, string curencyCode, string invoiceNo, string doNo, string billNo, string paymentBill, DateTime? dateFrom, DateTime? dateTo, int offset)
+        public MemoryStream GenerateExcelIn(string no, string supplierCode, string curencyCode, string invoiceNo, string doNo, /**string billNo, string paymentBill,**/ DateTime? dateFrom, DateTime? dateTo, int offset)
         {
-            var Query = GetReportInternNote(no, supplierCode, curencyCode, invoiceNo, doNo, billNo, paymentBill, dateFrom, dateTo, offset, 1, int.MaxValue);
+            var Query = GetReportInternNote(no, supplierCode, curencyCode, invoiceNo, doNo, /**billNo, paymentBill,**/ dateFrom, dateTo, offset, 1, int.MaxValue);
             Query = Query.OrderByDescending(b => b.iNDate).ToList();
             Query = Query.OrderByDescending(c => c.invoiceNo).ToList();
             DataTable result = new DataTable();
@@ -427,8 +427,8 @@ namespace Com.DanLiris.Service.Purchasing.Lib.Facades.GarmentInternNoteFacades
             result.Columns.Add(new DataColumn() { ColumnName = "Tanggal Invoice", DataType = typeof(String) });
             result.Columns.Add(new DataColumn() { ColumnName = "Nomor Surat Jalan", DataType = typeof(String) });
             result.Columns.Add(new DataColumn() { ColumnName = "Tanggal Surat Jalan", DataType = typeof(String) });
-            result.Columns.Add(new DataColumn() { ColumnName = "No Bon", DataType = typeof(String) });
-            result.Columns.Add(new DataColumn() { ColumnName = "No Bon Kecil", DataType = typeof(String) });
+            /**result.Columns.Add(new DataColumn() { ColumnName = "No Bon", DataType = typeof(String) });
+            result.Columns.Add(new DataColumn() { ColumnName = "No Bon Kecil", DataType = typeof(String) });**/
             result.Columns.Add(new DataColumn() { ColumnName = "Nominal", DataType = typeof(Double) });
             result.Columns.Add(new DataColumn() { ColumnName = "Mata Uang", DataType = typeof(String) });
             result.Columns.Add(new DataColumn() { ColumnName = "Rate", DataType = typeof(Double) });
@@ -453,7 +453,7 @@ namespace Com.DanLiris.Service.Purchasing.Lib.Facades.GarmentInternNoteFacades
                     //double totalHarga = item.pricePerDealUnit * item.quantity;
 
                     //result.Rows.Add(index, item.inNo, date, item.currencyCode, item.supplierName, item.paymentMethod, item.paymentType, DueDate, item.invoiceNo, invoDate, item.doNo, Dodate, item.pOSerialNumber, item.rONo, item.productCode, item.productName, item.quantity, item.uOMUnit, item.pricePerDealUnit, totalHarga);
-                    result.Rows.Add(index, item.inNo, date, item.supplierCode, item.supplierName, item.invoiceNo, invoDate, item.doNo, Dodate, item.billNo, item.paymentBill, priceTotal, item.currencyCode, item.doCurrencyRate, item.paymentType);
+                    result.Rows.Add(index, item.inNo, date, item.supplierCode, item.supplierName, item.invoiceNo, invoDate, item.doNo, Dodate, /**item.billNo, item.paymentBill,**/ priceTotal, item.currencyCode, item.doCurrencyRate, item.paymentType);
                 }
             }
 
