@@ -401,8 +401,8 @@ namespace Com.DanLiris.Service.Purchasing.Lib.Facades.GarmentInternNoteFacades
                     doDate = internnotedetail.DODate,
                     supplierCode = internnote.SupplierCode,
                     createdBy = internnote.CreatedBy,
-                    billNo = deliveryorder.BillNo,
-                    paymentBill = deliveryorder.PaymentBill,
+                    /**billNo = deliveryorder.BillNo,
+                    paymentBill = deliveryorder.PaymentBill,**/
                     doCurrencyRate = deliveryorder.DOCurrencyRate,
                     paymentType = deliveryorder.PaymentMethod
                 });
